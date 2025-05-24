@@ -1,0 +1,38 @@
+  
+ .header {
+    width: 100%;
+    height: 500px;
+    position: relative;
+  }
+  
+
+   .header_image img {
+    width: 100%;
+    height: 500px;       
+  }
+
+  .slick-prev {
+    left: 3% !important;
+    z-index: 1;
+  }
+  .slick-next {
+    right: 3% !important;
+    z-index: 1;
+  }
+ 
+  .slick-dots {
+    top: 450px;
+  }
+  
+  .slick-dots li button:before {
+    font-size: 16px;   /* Increase size (default is 6-12px) */
+    color: red !important;      /* Change to any color */
+    opacity: 1;        /* Make them fully visible */
+  }
+  
+  /* Optional: Customize active dot separately */
+  .slick-dots li.slick-active button:before {
+    color: orange !important;     /* Different color for active dot */
+    font-size: 18px;   /* Slightly larger if you want */
+    opacity: 1;
+  }

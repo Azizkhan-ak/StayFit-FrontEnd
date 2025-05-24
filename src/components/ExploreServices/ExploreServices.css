@@ -1,0 +1,18 @@
+.explore-services{
+    display: flex;
+    justify-content:center;
+    background-color: black;
+    align-items: center;
+    margin:0px;
+    padding: 0%;
+}
+
+.explore-services ul{
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+}
+
+
+

@@ -1,0 +1,68 @@
+.shop{
+    display: flex;
+    /* background-color: grey; */
+    margin-top: 0px;
+    width: relative;
+    
+}
+
+.shop-navbar{
+    padding-top: 60px;
+}
+
+.shop-navbar h3{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 25px;
+}
+
+.shop-navbar ul{
+    list-style: none;
+    padding-right: 50px;
+}
+
+.shop-navbar li.active{
+    color: orange;
+}
+
+.shop-navbar ul li{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 30px;
+}
+
+.shop-navbar ul li:hover{
+   cursor: pointer;
+   color: yellow;
+}
+
+.products{
+    width: 80%;
+}
+
+.shop-products {
+    padding-left: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 20px; /* space between grid items */
+    justify-items: center; /* centers items horizontally within their grid cells */
+  }
+  
+
+.shop-search-product-form{
+    display: flex;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.shop-search-product-input{
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 600px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shop-search-product-icon:hover{
+    cursor: pointer;
+}
