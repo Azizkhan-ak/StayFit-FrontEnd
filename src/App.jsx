@@ -12,6 +12,7 @@ import { Route, Router, Routes } from 'react-router-dom';
 import About from './pages/About/About.jsx'
 import Shop from './pages/Shop/Shop.jsx'
 import Location from './pages/Location/Location.jsx';
+import CartItems from './components/CartItems/CartItems.jsx';
 
 
 function GoToHome() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/locations" element={<Location />} />
+        <Route path="/cartItems" element={<CartItems />} />
         {/* Add more routes as needed */}
       </Routes>
     

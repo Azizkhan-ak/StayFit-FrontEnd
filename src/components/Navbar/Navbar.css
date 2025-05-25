@@ -50,7 +50,11 @@
   .navbar-controls li img:hover{
     cursor: pointer;
   }
+
  
+  .navbar-controls .test.active img {
+  filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(100%) hue-rotate(10deg);
+}
   
   @keyframes spin {
     from {

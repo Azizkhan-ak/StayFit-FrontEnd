@@ -10,19 +10,25 @@ const ContextProvider = ({children}) => {
         "themes":{}
     });
 
+    //shop item category
+    const [category,setCategory] = useState(0);
+
+    // payment 
+    const [selectedPayment,setSelectedPayment] = useState("cod");
+
     const addToCart = (item)=>{
         if(item.id in contextValue.cartItems){
             setContextValue((prev)=> ({
             ...prev,
             cartItems:{
-                ...prev.cartItems,  [item.id]:{ "numberOfItems": prev.cartItems[item.id]["numberOfItems"]+1, "pricePerItem":item.price }
+                ...prev.cartItems,  [item.id]:{ "numberOfItems": prev.cartItems[item.id]["numberOfItems"]+1, "priceOfItem":item.price,"imgUrl":item.imgUrl,"desc":item.desc,"name":item.name,"itemsInStock":item.itemsInStock }
             }
             })); 
         }
         else{
             setContextValue(prev => ({
                 ...prev,cartItems:{
-                    ...prev.cartItems,[item.id]:{"numberOfItems":1,"pricePerItem":item.price}
+                    ...prev.cartItems,[item.id]:{"numberOfItems":1,"priceOfItem":item.price,"imgUrl":item.imgUrl,"desc":item.desc,"name":item.name,"itemsInStock":item.itemsInStock}
                 }
             }))
         }
@@ -34,7 +40,7 @@ const ContextProvider = ({children}) => {
         setContextValue(prev => ({
             ...prev,cartItems:{
                 ...prev.cartItems, 
-                [item.id]:{ "numerOfItems": prev.cartItems[item.id]["numberOfItems"]-1,"priceOfItem":prev.cartItems[item.id]["priceOfItem"] }
+                [item.id]:{ "numberOfItems": prev.cartItems[item.id]["numberOfItems"]-1,"priceOfItem":item.price,"imgUrl":item.imgUrl,"desc":item.desc,"name":item.name,"itemsInStock":item.itemsInStock}
             }
         }))
        }
@@ -50,7 +56,7 @@ const ContextProvider = ({children}) => {
        }
     }
 
-    const contextValues = {setContextValue,contextValue,addToCart,removeFromCart};
+    const contextValues = {setContextValue,contextValue,addToCart,removeFromCart,category,setCategory,selectedPayment,setSelectedPayment};
   return (
     <div>
         <ApplicationContext.Provider value={contextValues}>
