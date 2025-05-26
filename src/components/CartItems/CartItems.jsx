@@ -19,9 +19,9 @@ const CartItems = () => {
             {Object.entries(contextValue.cartItems).map((item, index) => (
               <li key={item[0]}>
                 <div className="cart-item">
-                  <div className="cart-item-img">
-                    <img src={item[1]["imgUrl"]} />
-                  </div>
+                  <div className="image-zoom-wrapper">
+  <img src={item[1]["imgUrl"]} className="zoom-image" />
+</div>
                   <div className="cart-item-desc">
                     <h4>{item[1]["name"]}</h4>
                     <p>{item[1]["desc"]}</p>
