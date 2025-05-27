@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "^5.3.6",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.0.0",
-    "react-image-magnify": "^2.7.4",
     "react-router-dom": "^7.6.0",
     "react-slick": "^0.30.3",
     "react-spinners": "^0.17.0",
+    "run": "^1.5.0",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {

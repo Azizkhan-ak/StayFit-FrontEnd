@@ -8,12 +8,11 @@
 }
 
 .cart-item-desc{
+    padding-top: 10px;
     margin-left: 50px;
     width: 300px;
-    background-color: black;
-    color: antiquewhite;
+    color: white;
     margin-top: 0%;
-    border-radius: 10%;
 }
 
 .image-zoom-wrapper {
@@ -65,4 +64,37 @@
 
 .billing-details-total p{
     width: 200px;
+}
+
+.customer-details h1{
+    margin-left: 30px;
+}
+
+.customer-details-form{
+    display: flex;
+    justify-content: center;
+}
+
+
+.spinner-container {
+  margin-top: 200px;
+  margin-left: 550px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

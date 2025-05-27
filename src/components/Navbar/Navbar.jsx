@@ -4,9 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ApplicationContext } from "../ContextProvider/ContextProvider";
 
 const Navbar = () => {
-  const { contextValue } = useContext(ApplicationContext);
+  const { contextValue,selectTabValue,selectedTab } = useContext(ApplicationContext);
 
-  const [selectedTab, selectTabValue] = useState("home");
   const location = useLocation();
   let totalItems = 0;
 

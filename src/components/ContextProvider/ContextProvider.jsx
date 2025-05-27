@@ -12,9 +12,7 @@ const ContextProvider = ({children}) => {
 
     //shop item category
     const [category,setCategory] = useState(0);
-
-    // payment 
-    const [selectedPayment,setSelectedPayment] = useState("cod");
+     const [selectedTab, selectTabValue] = useState("home");
 
     const addToCart = (item)=>{
         if(item.id in contextValue.cartItems){
@@ -36,7 +34,6 @@ const ContextProvider = ({children}) => {
 
     const removeFromCart = (item)=>{
        if(contextValue.cartItems[item.id]["numberOfItems"]>1){
-        console.log("removing from cart inside if ");
         setContextValue(prev => ({
             ...prev,cartItems:{
                 ...prev.cartItems, 
@@ -45,7 +42,6 @@ const ContextProvider = ({children}) => {
         }))
        }
        else{
-        console.log("removing from cart inside else ");
         setContextValue(prev=>{
             const updateCart = {...prev.cartItems};
             delete updateCart[item.id];
@@ -56,7 +52,7 @@ const ContextProvider = ({children}) => {
        }
     }
 
-    const contextValues = {setContextValue,contextValue,addToCart,removeFromCart,category,setCategory,selectedPayment,setSelectedPayment};
+    const contextValues = {setContextValue,contextValue,addToCart,removeFromCart,category,setCategory,selectTabValue,selectedTab};
   return (
     <div>
         <ApplicationContext.Provider value={contextValues}>
