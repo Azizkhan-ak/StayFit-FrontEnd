@@ -1,0 +1,11 @@
+.checkout-form-card-element {
+  max-width: 350px;
+  margin: 0 auto 50px auto; /* top 0, auto left/right, 50px bottom */
+}
+
+.checkout-form-button {
+  display: flex;
+  justify-content: center;  /* horizontal */
+  align-items: center;      /* vertical */
+  height: 100px; /* or whatever height needed */
+}

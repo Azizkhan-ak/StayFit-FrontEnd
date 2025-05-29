@@ -4,6 +4,9 @@ import { ApplicationContext } from "../ContextProvider/ContextProvider";
 import { icons } from "../../assets/Asset";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from "bootstrap";
+import axios from "axios";
+import { ordersUrls } from "../../urls/urls";
+import CheckOutForm from "../Checkout/CheckOutForm";
 
 const CartItems = () => {
   const { contextValue, selectTabValue } = useContext(ApplicationContext);
@@ -14,10 +17,14 @@ const CartItems = () => {
     phone: "",
     address: "",
     orderNotes: "",
-    paymentMethod: "ep",
+    paymentMethod: "online",
+    city: "",
+    country: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [orderPayload, setOrderPayload] = useState(null);
 
   let deliveryCharges = 150;
   let tax = 0;
@@ -27,31 +34,57 @@ const CartItems = () => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
+  function onPaymentSuccess(paymentIntent) {
+    console.log("Payment succeeded:", paymentIntent);
+    // After successful payment, place order in backend or update order status
+    // e.g. call your placeOrder API with paymentIntent info included
+    setShowCheckout(false);
+    // Show success modal
+  }
+
+  function onPaymentError(paymentIntent) {
+    console.log("Pay");
+  }
+
   const placeOrder = async () => {
     setIsLoading(true);
     const payLoad = {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
-      address: formData.address,
+      deliveryAddress: formData.address,
       orderNotes: formData.orderNotes,
       paymentMethod: formData.paymentMethod,
-      cartItems: contextValue.cartItems,
+      products: [],
     };
 
+    Object.entries(contextValue.cartItems).forEach(([key, value]) => {
+      payLoad.products.push({
+        id: key,
+        quantity: value.numberOfItems,
+        price: value.priceOfItem,
+      });
+    });
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      if (formData.paymentMethod === "cod") {
+        const response = await axios.post(ordersUrls.placeOrder, payLoad);
+        const responseJson = await response.data;
+        // Show modal
+        const modal = new Modal(document.getElementById("orderSuccessModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
+      } else {
+        setOrderPayload(payLoad);
+        setShowCheckout(true);
+        //online payment via card
+      }
     } catch (error) {
+      console.log(" Something went wrong : " + error);
     } finally {
       setIsLoading(false);
-      // Show modal
-      const modal = new Modal(  document.getElementById("orderSuccessModal"),
-  {
-    backdrop: 'static', // prevents click outside to close
-    keyboard: false     // disables ESC key
-  }
-  );
-      modal.show();
     }
   };
 
@@ -137,6 +170,34 @@ const CartItems = () => {
                 </div>
 
                 <div className="mb-3">
+                  <label htmlFor="city" className="form-label">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="city"
+                    placeholder="karachi"
+                    required
+                    onChange={(e) => onChangeHandler(e)}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="country" className="form-label">
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="country"
+                    placeholder="Pakistan"
+                    required
+                    onChange={(e) => onChangeHandler(e)}
+                  />
+                </div>
+
+                <div className="mb-3">
                   <label htmlFor="address" className="form-label">
                     Delivery Address
                   </label>
@@ -176,11 +237,11 @@ const CartItems = () => {
                       type="radio"
                       name="paymentMethod"
                       id="paymentMethod"
-                      value="ep"
-                      checked={formData["paymentMethod"] == "ep"}
+                      value="online"
+                      checked={formData["paymentMethod"] == "online"}
                       onChange={(e) => onChangeHandler(e)}
                     />
-                    Easypaisa
+                    Pay Online (via Debit/Credit Card)
                   </label>
                   <br />
                   <label>
@@ -267,9 +328,9 @@ const CartItems = () => {
                   ></span>
                   Placing Order...
                 </>
-              ) : 
+              ) : (
                 "Place Order"
-              }
+              )}
             </button>
 
             <div
@@ -290,6 +351,10 @@ const CartItems = () => {
                       className="btn-close"
                       data-bs-dismiss="modal"
                       aria-label="Close"
+                      onClick={() => {
+                        selectTabValue("home");
+                        window.location.replace("/"); // refresh state
+                      }}
                     ></button>
                   </div>
                   <div className="modal-body">
@@ -312,6 +377,15 @@ const CartItems = () => {
               </div>
             </div>
           </div>
+
+          {/* Your normal order form UI */}
+          {showCheckout && (
+            <CheckOutForm
+              payLoad={orderPayload}
+              onPaymentSuccess={onPaymentSuccess}
+              onPaymentError={onPaymentError}
+            />
+          )}
         </>
       ) : (
         <div className="cart-item-empty">

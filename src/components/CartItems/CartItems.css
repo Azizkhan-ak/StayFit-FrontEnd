@@ -41,10 +41,7 @@
 }
 
 .cart-item-empty{
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center;     /* Center vertically */
-  height: 100vh;      
+  margin-left: 450px;
 }
 
 .billing h1{
