@@ -18,10 +18,13 @@ const CheckOutForm = ({ payLoad, onPaymentSuccess, onPaymentError }) => {
 
     try {
       // Step 1: Call your backend to create a PaymentIntent
-      const { data } = await axios.post(checkOutUrls.getPaymentIntent, payLoad);
+      const response = await axios.post(checkOutUrls.getPaymentIntent, payLoad);
 
+      if(response.error){
+        onPaymentError();
+      }
       // Step 2: Confirm the payment on frontend using client secret from backend
-      const result = await stripe.confirmCardPayment(data.clientSecret, {
+      const result = await stripe.confirmCardPayment(response.data.clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
           billing_details: {
@@ -35,14 +38,11 @@ const CheckOutForm = ({ payLoad, onPaymentSuccess, onPaymentError }) => {
         onPaymentError(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
-            console.log("Success: "+result)
-          onPaymentSuccess(result.paymentIntent);
+            onPaymentSuccess(result.paymentIntent);
         }
       }
     } catch (error) {
       onPaymentError(error.message);
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -54,7 +54,7 @@ const CheckOutForm = ({ payLoad, onPaymentSuccess, onPaymentError }) => {
         </div>
         <div className="checkout-form-button">
             <button className="btn btn-success" type="submit" disabled={!stripe || isProcessing}>
-        {isProcessing ? "Processing..." : "Pay Now"}
+        {isProcessing ? "Processing, please wait..." : "Pay Now"}
       </button>
     
         </div>

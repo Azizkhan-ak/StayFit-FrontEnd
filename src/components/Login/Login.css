@@ -1,0 +1,120 @@
+.main-container{
+    display: flex;
+}
+
+.login-container{
+    height: 200px;
+    width: 500px;
+    margin-left: 100px;
+    margin-top: 150px;
+    background-color: rgb(4, 102, 109);
+    border-radius: 25px;
+}
+
+.signup-container{
+    height: 500px;
+    width: 500px;
+    margin-left: 100px;
+    margin-top:50px;
+    background-color: rgb(4, 102, 109);
+    border-radius: 25px;
+}
+
+.account-check{
+    color: blue;
+    margin-left: 250px;
+    margin-top: 20px;
+}
+
+.account-check p:hover{
+cursor: pointer;
+}
+
+
+.email-container{
+    display: flex;
+        padding-top: 20px;
+}
+
+.email-container input{
+    margin-left: 100px;
+    width: 300px;
+    border-radius: 25px;
+    border-color:blue;
+}
+
+.email-container  label{
+    margin-left: 10px;
+    width: 50px;
+}
+
+.password-container{
+    display: flex;
+    padding-top: 20px;
+}
+
+.password-input input{
+    margin-left: 100px;
+    width: 300px;
+    border-radius: 25px;
+    border-color:blue;
+}
+
+.password-label label{
+    margin-left: 10px;
+    width: 50px;
+}
+
+.login-button{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-button button{
+    width: 100px;
+    border-radius: 25px;
+    background-color: rgb(215, 250, 241);
+}
+
+
+.user-image{
+    height: 150px;
+    width: 150px;
+    margin-top: 150px;
+    margin-left: 250px;
+    margin-right: 0px;
+}
+
+.user-image img{
+    height: 100%;
+    width: 100%;
+}
+
+.showpassword{
+    margin-left: 170px;
+    padding-top: 10px;
+}
+
+.showpassword label{
+    margin-left: 10px;
+}
+
+
+.signup-form {
+  padding-top: 20px;
+}
+
+
+.form-group{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.form-group input{
+    width: 300px;
+    border-radius: 25px;
+    border-color: blue;
+    
+}

@@ -3,7 +3,8 @@
     "searchIcon":"./src/assets/Icon_Search.png",
     "addIcon":"./src/assets/add_icon.png",
     "minusIcon":"./src/assets/minus_icon.png",
-    "emptyCart":"./src/assets/empty_cart.png"
+    "emptyCart":"./src/assets/empty_cart.png",
+    "login":"./src/assets/login.png"
  };
  
  export const assets = 

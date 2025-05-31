@@ -52,7 +52,7 @@
   }
 
  
-  .navbar-controls .test.active img {
+  .navbar-controls .icon.active img {
   filter: brightness(0) saturate(100%) invert(50%) sepia(100%) saturate(100%) hue-rotate(10deg);
 }
   

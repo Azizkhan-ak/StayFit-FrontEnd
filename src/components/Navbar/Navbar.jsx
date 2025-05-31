@@ -21,6 +21,7 @@ const Navbar = () => {
     else if (path.includes("locations")) selectTabValue("locations");
     else if (path.includes("blogs")) selectTabValue("blogs");
     else if (path.includes("cartItems")) selectTabValue("cartItems");
+    else if(path.includes("login")) selectTabValue("login");
     else selectTabValue("home");
   }, [location]);
 
@@ -93,7 +94,7 @@ const Navbar = () => {
 
 
           <li style={{ position: "relative" }}>
-            <Link className={`test ${
+            <Link className={`icon ${
                 selectedTab === "cartItems" ? "active" : ""
               }`} to="/cartItems" >
                 <img
@@ -121,7 +122,9 @@ const Navbar = () => {
                 </Link>  
           </li>
           <li>
+            <Link className={`icon ${selectedTab === "login" ? "active":""}`} to={"/login"}>
             <img src="src/assets/Icon_Account.png" title="Login/Register " />
+            </Link>
           </li>
         </ul>
       </div>

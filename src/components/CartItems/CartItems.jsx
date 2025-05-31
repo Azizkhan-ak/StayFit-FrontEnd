@@ -17,7 +17,7 @@ const CartItems = () => {
     phone: "",
     address: "",
     orderNotes: "",
-    paymentMethod: "online",
+    paymentMethod: "1",
     city: "",
     country: "",
   });
@@ -34,16 +34,46 @@ const CartItems = () => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  function onPaymentSuccess(paymentIntent) {
-    console.log("Payment succeeded:", paymentIntent);
-    // After successful payment, place order in backend or update order status
-    // e.g. call your placeOrder API with paymentIntent info included
-    setShowCheckout(false);
-    // Show success modal
+  async function onPaymentSuccess(paymentIntent) {
+    try {
+      const payload = {
+        ...orderPayload,
+        paymentDto: {
+          paymentIntentId: paymentIntent.id,
+          created: paymentIntent.created,
+          currency: paymentIntent.currency,
+          amount: paymentIntent.amount,
+        },
+      };
+      const response = await axios.post(ordersUrls.placeOrder, payload);
+      if (response.error) {
+         const modal = new Modal(document.getElementById("orderErrorModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
+      } else {
+        const modal = new Modal(document.getElementById("orderSuccessModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
+      }
+    } catch (error) {
+       const modal = new Modal(document.getElementById("orderErrorModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
+    }
   }
 
   function onPaymentError(paymentIntent) {
-    console.log("Pay");
+     const modal = new Modal(document.getElementById("orderErrorModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
   }
 
   const placeOrder = async () => {
@@ -52,6 +82,8 @@ const CartItems = () => {
       name: formData.name,
       email: formData.email,
       phone: formData.phone,
+      city: formData.city,
+      country: formData.country,
       deliveryAddress: formData.address,
       orderNotes: formData.orderNotes,
       paymentMethod: formData.paymentMethod,
@@ -67,15 +99,24 @@ const CartItems = () => {
     });
 
     try {
-      if (formData.paymentMethod === "cod") {
+      if (formData.paymentMethod === "2") {
         const response = await axios.post(ordersUrls.placeOrder, payLoad);
-        const responseJson = await response.data;
-        // Show modal
+        if(response.error){
+           // Show modal
+        const modal = new Modal(document.getElementById("orderErrorModal"), {
+          backdrop: "static", // prevents click outside to close
+          keyboard: false, // disables ESC key
+        });
+        modal.show();
+        }
+        else{
+           // Show modal
         const modal = new Modal(document.getElementById("orderSuccessModal"), {
           backdrop: "static", // prevents click outside to close
           keyboard: false, // disables ESC key
         });
         modal.show();
+        }
       } else {
         setOrderPayload(payLoad);
         setShowCheckout(true);
@@ -237,8 +278,8 @@ const CartItems = () => {
                       type="radio"
                       name="paymentMethod"
                       id="paymentMethod"
-                      value="online"
-                      checked={formData["paymentMethod"] == "online"}
+                      value="1"
+                      checked={formData["paymentMethod"] == "1"}
                       onChange={(e) => onChangeHandler(e)}
                     />
                     Pay Online (via Debit/Credit Card)
@@ -249,8 +290,8 @@ const CartItems = () => {
                       type="radio"
                       name="paymentMethod"
                       id="paymentMethod"
-                      value="cod"
-                      checked={formData["paymentMethod"] == "cod"}
+                      value="2"
+                      checked={formData["paymentMethod"] == "2"}
                       onChange={(e) => onChangeHandler(e)}
                     />
                     Cash on delivery
@@ -333,6 +374,7 @@ const CartItems = () => {
               )}
             </button>
 
+{/* {This model is for success } */}
             <div
               className="modal fade"
               id="orderSuccessModal"
@@ -358,7 +400,8 @@ const CartItems = () => {
                     ></button>
                   </div>
                   <div className="modal-body">
-                    Your order has been placed successfully!
+                    Your order has been placed successfully! Check email for
+                    details
                   </div>
                   <div className="modal-footer">
                     <button
@@ -376,9 +419,54 @@ const CartItems = () => {
                 </div>
               </div>
             </div>
+
+{/* {This model is for error message} */}
+
+<div
+              className="modal fade"
+              id="orderErrorModal"
+              tabIndex="-1"
+              aria-labelledby="orderErrorModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="orderErrorModalLabel">
+                      Order Failed 
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    Your order has been failed, Please call at 03XXXXXXXXXX for further details.
+                    we are sorry for inconvenience 
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        selectTabValue("home");
+                        window.location.replace("/"); // refresh state
+                      }}
+                    >
+                      Go to Home
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
-          {/* Your normal order form UI */}
+          {/* when onjine payment metod is selected */}
           {showCheckout && (
             <CheckOutForm
               payLoad={orderPayload}
