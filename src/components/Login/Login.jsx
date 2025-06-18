@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
-import { Button } from "bootstrap";
+import { Button, Modal } from "bootstrap";
 import { icons } from "../../assets/Asset";
+import axios from "axios";
+import { userManagementUrls } from "../../urls/urls";
+import { ApplicationContext } from "../ContextProvider/ContextProvider";
 
 const Login = () => {
+
+  const { selectTabValue,selectedTab } = useContext(ApplicationContext);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,17 +24,63 @@ const Login = () => {
   const [signUp, setSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const login = async ()=>{
+  const signIn = async (e)=>{
+    e.preventDefault();
+    const response = await axios.post(userManagementUrls.loginUrl,{
+      email:formData.email,
+      password:formData.password
+    });
+    
+    if(response.status === 200){
+       const responseData = response.data;
+       if(responseData.successful === true){
+        const model = new Modal(document.getElementById("loginSuccessModal"),{
+          backdrop: 'static',
+          keyboard:false
+        });
+        model.show();
+       }
+       else{
+         const model = new Modal(document.getElementById("loginFailedModal"),{
+          backdrop: 'static',
+          keyboard:false
+        });
+        model.show();
+       }
 
+    }
+    else{
+      const model = new Modal(document.getElementById("loginFailedModal"),{
+          backdrop: 'static',
+          keyboard:false
+        });
+        model.show();
+    }
   }
 
-  const register = async ()=>{
+  const register = async (e) => {
+    e.preventDefault();
 
-  }
+    const response = await axios.post(userManagementUrls.registerUrl, {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      phone: formData.phone,
+      email: formData.email,
+      password: formData.password,
+      city: formData.city,
+      country: formData.country,
+      address: formData.address,
+    });
+    console.log(response);
+  };
 
   const onChangeHandler = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+
+  //create login success and failure models 
+
+
 
   return (
     <>
@@ -77,7 +129,7 @@ const Login = () => {
                   <label>Show password</label>
                 </div>
                 <div className="login-button">
-                  <button>Login</button>
+                  <button onClick={signIn}>Login</button>
                 </div>
               </form>
             </div>
@@ -208,7 +260,7 @@ const Login = () => {
                   </div>
 
                   <div className="login-button">
-                    <button>Sign Up</button>
+                    <button onClick={register}>Sign Up</button>
                   </div>
                 </div>
               </form>
@@ -227,6 +279,91 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+
+{/* success model */}
+        <div
+              className="modal fade"
+              id="loginSuccessModal"
+              tabIndex="-1"
+              aria-labelledby="loginSuccessModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="loginSuccessModalLabel">
+                      Logged In!
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    You have logged in successfully!
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        console.log("insuccessModel");
+                        selectTabValue("home");
+                        window.location.replace("/"); // refresh state
+                      }}
+                    >
+                      Go to Home
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            {/* failuer model */}
+        <div
+              className="modal fade"
+              id="loginFailedModal"
+              tabIndex="-1"
+              aria-labelledby="loginFailedModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="loginFailedModalLabel">
+                      Log in failed!
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                   Log in failed, invalid credentials!
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      onClick={() => {
+                        selectTabValue("home");
+                        window.location.replace("/"); // refresh state
+                      }}
+                    >
+                      Go to Home
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
     </>
   );
 };

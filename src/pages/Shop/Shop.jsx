@@ -4,6 +4,7 @@ import { assets } from '../../assets/Asset'
 import DisplayProduct from './DisplayProduct';
 import { ApplicationContext } from '../../components/ContextProvider/ContextProvider';
 import { ClipLoader } from 'react-spinners';
+import { productsUrls } from '../../urls/urls';
 
 
 
@@ -15,7 +16,7 @@ const Shop = () => {
 
   useEffect( ()=>{
     const fetchProducts = async ()=>{
-      let url = "http://localhost:8080/stayfit/products.json/getProducts?category="+category;
+      let url = productsUrls.getProducts+category;
       const response = await fetch (url);
       const responseJson = await response.json();
       if(responseJson && responseJson.successful === true && responseJson.content.length>0){

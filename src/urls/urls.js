@@ -1,11 +1,16 @@
 export const productsUrls = {
-    getProducts:"http://localhost:8080/stayfit/products.json/getProducts?category="
+    getProducts:"http://localhost:8080/stayfit/api/public/products.json/getProducts?category="
 }
 
 export const ordersUrls = {
-    placeOrder : "http://localhost:8080/stayfit/order.json/placeOrder"
+    placeOrder : "http://localhost:8080/stayfit/api/public/order.json/placeOrder"
 }
 
 export const checkOutUrls ={
-    getPaymentIntent:"http://localhost:8080/stayfit/api/payments/create-payment-intent"
+    getPaymentIntent:"http://localhost:8080/stayfit/api/public/api/payments/create-payment-intent"
+}
+
+export const userManagementUrls = {
+    registerUrl:"http://localhost:8080/stayfit/api/public/register",
+    loginUrl:"http://localhost:8080/stayfit/api/public/login"
 }
