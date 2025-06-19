@@ -12,7 +12,7 @@ const ContextProvider = ({children}) => {
 
     //shop item category
     const [category,setCategory] = useState(0);
-     const [selectedTab, selectTabValue] = useState("home");
+    const [selectedTab, selectTabValue] = useState("home");
 
     const addToCart = (item)=>{
         if(item.id in contextValue.cartItems){

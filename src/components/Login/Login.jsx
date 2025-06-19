@@ -5,6 +5,7 @@ import { icons } from "../../assets/Asset";
 import axios from "axios";
 import { userManagementUrls } from "../../urls/urls";
 import { ApplicationContext } from "../ContextProvider/ContextProvider";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
 
@@ -23,8 +24,10 @@ const Login = () => {
   });
   const [signUp, setSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading,setLoading] = useState(false);
 
   const signIn = async (e)=>{
+    setLoading(true);
     e.preventDefault();
     const response = await axios.post(userManagementUrls.loginUrl,{
       email:formData.email,
@@ -34,6 +37,11 @@ const Login = () => {
     if(response.status === 200){
        const responseData = response.data;
        if(responseData.successful === true){
+        const decodeToken = jwtDecode(responseData.content);
+        sessionStorage.setItem("token",responseData.content);
+        sessionStorage.setItem("subject",decodeToken.sub);
+        sessionStorage.setItem("role",decodeToken.role);
+        sessionStorage.setItem("expiry",decodeToken.expiry);
         const model = new Modal(document.getElementById("loginSuccessModal"),{
           backdrop: 'static',
           keyboard:false
@@ -129,7 +137,9 @@ const Login = () => {
                   <label>Show password</label>
                 </div>
                 <div className="login-button">
-                  <button onClick={signIn}>Login</button>
+                  <button onClick={signIn}>
+                    {loading ? "logging In..." :"Login"}
+                    </button>
                 </div>
               </form>
             </div>
@@ -260,7 +270,9 @@ const Login = () => {
                   </div>
 
                   <div className="login-button">
-                    <button onClick={register}>Sign Up</button>
+                    <button onClick={register}>
+                      {loading ? "Singing Up...":"Sign Up"}
+                      </button>
                   </div>
                 </div>
               </form>
@@ -311,7 +323,6 @@ const Login = () => {
                       className="btn btn-success"
                       data-bs-dismiss="modal"
                       onClick={() => {
-                        console.log("insuccessModel");
                         selectTabValue("home");
                         window.location.replace("/"); // refresh state
                       }}

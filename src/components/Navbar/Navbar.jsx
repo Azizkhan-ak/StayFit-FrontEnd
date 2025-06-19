@@ -8,7 +8,7 @@ const Navbar = () => {
 
   const location = useLocation();
   let totalItems = 0;
-
+ 
     if(contextValue.cartItems){
       totalItems = Object.values(contextValue.cartItems).reduce( (sum,item)=> sum+item["numberOfItems"],0);
     }
@@ -22,8 +22,11 @@ const Navbar = () => {
     else if (path.includes("blogs")) selectTabValue("blogs");
     else if (path.includes("cartItems")) selectTabValue("cartItems");
     else if(path.includes("login")) selectTabValue("login");
+    else if (path.includes("userProfile")) selectTabValue("userProfile");
+    else if (path.includes("adminPanel")) selectTabValue("adminPanel")
     else selectTabValue("home");
   }, [location]);
+
 
   return (
     <div className="navbar">
@@ -84,6 +87,16 @@ const Navbar = () => {
               Locations
             </Link>
           </li>
+          {
+           sessionStorage.getItem("token") && ( 
+           <li>
+            <Link className={`nav-link ${selectedTab === `${sessionStorage.getItem("role")==="0" ? "userProfile":"adminPanel"}`?"active":""}`} 
+            to={sessionStorage.getItem("role") === "1" ? "/adminPanel" : "/userProfile"}>
+               {sessionStorage.getItem("role") === "1" ?"Admin Panel":"User Profile"}
+            </Link>
+           </li>
+           )
+          }
         </ul>
       </div>
       <div className="navbar-controls">
@@ -122,9 +135,19 @@ const Navbar = () => {
                 </Link>  
           </li>
           <li>
+            {sessionStorage.getItem("token") ? 
+            <img src="src/assets/Icon_Account.png" title="Logout " onClick={
+              ()=>{
+                sessionStorage.clear();
+                selectTabValue("/home");
+                window.location.replace("/");
+              }} />
+
+            :
             <Link className={`icon ${selectedTab === "login" ? "active":""}`} to={"/login"}>
             <img src="src/assets/Icon_Account.png" title="Login/Register " />
             </Link>
+            }
           </li>
         </ul>
       </div>
