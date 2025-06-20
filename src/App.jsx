@@ -16,6 +16,7 @@ import CartItems from './components/CartItems/CartItems.jsx';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Login from './components/Login/Login.jsx';
+import AdminPanel from './components/AdminPanel/AdminPanel.jsx';
 
 // Replace with your actual publishable key from Stripe Dashboard
 const stripePromise = loadStripe("pk_test_51RSKiUR1nSJNtSG2aRN44mtfQz1gLT7boRgeSoMZ3Z4nLWwB1jvZ1NBhVfXDBaajNlmSW29ByezLwbdCKKoHF3nG00ni7a7Qi8");
@@ -47,6 +48,7 @@ function App() {
         <Route path="/locations" element={<Location />} />
         <Route path="/cartItems" element={<CartItems />} />
         <Route path="/login" element={<Login/>}/>
+        <Route path='/adminPanel' element={<AdminPanel/>}/>
         {/* Add more routes as needed */}
       </Routes>
     </Elements>

@@ -1,0 +1,48 @@
+.admin-panel{
+    display: flex;
+    /* background-color: grey; */
+    margin-top: 10px;
+    width: relative;   
+}
+
+.admin-navbar{
+    padding-top: 60px;
+    max-width: 300px;
+}
+
+.admin-navbar h3{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 25px;
+}
+
+.admin-navbar ul{
+    list-style: none;
+    padding-right: 50px;
+}
+
+.admin-navbar li.active{
+    color: orange;
+}
+
+.admin-navbar ul li{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 30px;
+}
+
+.admin-navbar ul li:hover{
+   cursor: pointer;
+   color: yellow;
+}
+
+.wrap-inventory{
+    width: 80%;
+}
+
+.inventory{
+    padding-left: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 20px; /* space between grid items */
+    justify-items: center; /* centers items horizontally within their grid cells */
+  }
+  

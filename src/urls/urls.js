@@ -14,3 +14,7 @@ export const userManagementUrls = {
     registerUrl:"http://localhost:8080/stayfit/api/public/register",
     loginUrl:"http://localhost:8080/stayfit/api/public/login"
 }
+
+export const adminUrls = {
+    listInventoryUrl:"http://localhost:8080/stayfit/admin.json/inventory"
+}
