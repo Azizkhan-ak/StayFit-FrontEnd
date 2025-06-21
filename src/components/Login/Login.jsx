@@ -41,7 +41,7 @@ const Login = () => {
         sessionStorage.setItem("token",responseData.content);
         sessionStorage.setItem("subject",decodeToken.sub);
         sessionStorage.setItem("role",decodeToken.role);
-        sessionStorage.setItem("expiry",decodeToken.expiry);
+        sessionStorage.setItem("expiry",decodeToken.exp);
         const model = new Modal(document.getElementById("loginSuccessModal"),{
           backdrop: 'static',
           keyboard:false

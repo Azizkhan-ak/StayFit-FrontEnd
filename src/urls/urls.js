@@ -16,5 +16,6 @@ export const userManagementUrls = {
 }
 
 export const adminUrls = {
-    listInventoryUrl:"http://localhost:8080/stayfit/admin.json/inventory"
+    listInventoryUrl:"http://localhost:8080/stayfit/admin.json/inventory",
+    deleteInventoryItemByIdUrl:"http://localhost:8080/stayfit/admin.json/inventory/delete?itemId="
 }

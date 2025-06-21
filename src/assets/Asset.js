@@ -4,7 +4,9 @@
     "addIcon":"./src/assets/add_icon.png",
     "minusIcon":"./src/assets/minus_icon.png",
     "emptyCart":"./src/assets/empty_cart.png",
-    "login":"./src/assets/login.png"
+    "login":"./src/assets/login.png",
+    "deleteIcon":"./src/assets/delete_icon.png",
+    "editIcon": "./src/assets/edit_icon.png"
  };
  
  export const assets = 
