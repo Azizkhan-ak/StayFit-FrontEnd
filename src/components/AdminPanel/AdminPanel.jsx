@@ -134,7 +134,7 @@ const AdminPanel = () => {
                 <div className="modal-content">
                   <div className="modal-header">
                     <h5 className="modal-title" id="InvalidTokenModalLabel">
-                      Order Placed
+                      Session Expired!
                     </h5>
                     <button
                       type="button"
