@@ -30,6 +30,17 @@
 cursor: pointer;
 }
 
+.oauth-container{
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    margin-left: 600px;
+}
+
+.oauth h5{
+    padding-left: 70px;
+}
+
 
 .email-container{
     display: flex;
@@ -66,17 +77,27 @@ cursor: pointer;
 }
 
 .login-button{
-    margin-top: 30px;
     display: flex;
-    justify-content: center;
+    max-width: 100%;
+    gap: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 
 .login-button button{
-    width: 100px;
+    width: 300px;
     border-radius: 25px;
     background-color: rgb(215, 250, 241);
 }
 
+.signup-button button{
+     width: 150px;
+    border-radius: 25px;
+    background-color: rgb(215, 250, 241);
+    margin-left: 200px;
+    margin-top: 30px;
+}
 
 .user-image{
     height: 150px;
@@ -116,5 +137,4 @@ cursor: pointer;
     width: 300px;
     border-radius: 25px;
     border-color: blue;
-    
 }

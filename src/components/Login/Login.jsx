@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Login.css";
 import { Button, Modal } from "bootstrap";
 import { icons } from "../../assets/Asset";
@@ -8,8 +8,35 @@ import { ApplicationContext } from "../ContextProvider/ContextProvider";
 import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id:
+          "809742363195-7med73ik08h4cmsee308a1io8abtfur4.apps.googleusercontent.com",
+        callback: handleGoogleResponse,
+      });
 
-  const { selectTabValue,selectedTab } = useContext(ApplicationContext);
+      window.google.accounts.id.renderButton(
+        document.getElementById("googleSignInDiv"),
+        {
+          theme: "outline",
+          size: "large",
+        }
+      );
+    }
+  }, []);
+
+  function handleGoogleResponse(response) {
+    if(response){
+      console.log(response.credential);
+    }
+    else{
+
+    }
+
+  }
+
+  const { selectTabValue, selectedTab } = useContext(ApplicationContext);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -24,47 +51,44 @@ const Login = () => {
   });
   const [signUp, setSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const signIn = async (e)=>{
+  const signIn = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const response = await axios.post(userManagementUrls.loginUrl,{
-      email:formData.email,
-      password:formData.password
+    const response = await axios.post(userManagementUrls.loginUrl, {
+      email: formData.email,
+      password: formData.password,
     });
-    
-    if(response.status === 200){
-       const responseData = response.data;
-       if(responseData.successful === true){
-        const decodeToken = jwtDecode(responseData.content);
-        sessionStorage.setItem("token",responseData.content);
-        sessionStorage.setItem("subject",decodeToken.sub);
-        sessionStorage.setItem("role",decodeToken.role);
-        sessionStorage.setItem("expiry",decodeToken.exp);
-        const model = new Modal(document.getElementById("loginSuccessModal"),{
-          backdrop: 'static',
-          keyboard:false
-        });
-        model.show();
-       }
-       else{
-         const model = new Modal(document.getElementById("loginFailedModal"),{
-          backdrop: 'static',
-          keyboard:false
-        });
-        model.show();
-       }
 
-    }
-    else{
-      const model = new Modal(document.getElementById("loginFailedModal"),{
-          backdrop: 'static',
-          keyboard:false
+    if (response.status === 200) {
+      const responseData = response.data;
+      if (responseData.successful === true) {
+        const decodeToken = jwtDecode(responseData.content);
+        sessionStorage.setItem("token", responseData.content);
+        sessionStorage.setItem("subject", decodeToken.sub);
+        sessionStorage.setItem("role", decodeToken.role);
+        sessionStorage.setItem("expiry", decodeToken.exp);
+        const model = new Modal(document.getElementById("loginSuccessModal"), {
+          backdrop: "static",
+          keyboard: false,
         });
         model.show();
+      } else {
+        const model = new Modal(document.getElementById("loginFailedModal"), {
+          backdrop: "static",
+          keyboard: false,
+        });
+        model.show();
+      }
+    } else {
+      const model = new Modal(document.getElementById("loginFailedModal"), {
+        backdrop: "static",
+        keyboard: false,
+      });
+      model.show();
     }
-  }
+  };
 
   const register = async (e) => {
     e.preventDefault();
@@ -86,9 +110,7 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  //create login success and failure models 
-
-
+  //create login success and failure models
 
   return (
     <>
@@ -137,9 +159,14 @@ const Login = () => {
                   <label>Show password</label>
                 </div>
                 <div className="login-button">
+                  
                   <button onClick={signIn}>
-                    {loading ? "logging In..." :"Login"}
-                    </button>
+                    {loading ? "logging In..." : "Login"}
+                  </button>
+                   <button onClick={signIn}>
+                    Forgot password? Reset!
+                  </button>
+
                 </div>
               </form>
             </div>
@@ -269,10 +296,10 @@ const Login = () => {
                     </div>
                   </div>
 
-                  <div className="login-button">
+                  <div className="signup-button">
                     <button onClick={register}>
-                      {loading ? "Singing Up...":"Sign Up"}
-                      </button>
+                      {loading ? "Singing Up..." : "Sign Up"}
+                    </button>
                   </div>
                 </div>
               </form>
@@ -292,89 +319,93 @@ const Login = () => {
         </div>
       </div>
 
+      <div className="oauth-container">
+        <div className="oauth">
+          <h5>Or</h5>
+          <div id="googleSignInDiv"></div>{" "}
+          {/* Google will render button here */}
+        </div>
+      </div>
 
-{/* success model */}
-        <div
-              className="modal fade"
-              id="loginSuccessModal"
-              tabIndex="-1"
-              aria-labelledby="loginSuccessModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="loginSuccessModalLabel">
-                      Logged In!
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    You have logged in successfully!
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      data-bs-dismiss="modal"
-                      onClick={() => {
-                        selectTabValue("home");
-                        window.location.replace("/"); // refresh state
-                      }}
-                    >
-                      Go to Home
-                    </button>
-                  </div>
-                </div>
-              </div>
+      {/* success model */}
+      <div
+        className="modal fade"
+        id="loginSuccessModal"
+        tabIndex="-1"
+        aria-labelledby="loginSuccessModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="loginSuccessModalLabel">
+                Logged In!
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
-
-
-            {/* failuer model */}
-        <div
-              className="modal fade"
-              id="loginFailedModal"
-              tabIndex="-1"
-              aria-labelledby="loginFailedModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="loginFailedModalLabel">
-                      Log in failed!
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                   Log in failed, invalid credentials!
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      data-bs-dismiss="modal"
-                      onClick={() => {
-                        selectTabValue("home");
-                        window.location.replace("/"); // refresh state
-                      }}
-                    >
-                      Go to Home
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div className="modal-body">You have logged in successfully!</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-success"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  selectTabValue("home");
+                  window.location.replace("/"); // refresh state
+                }}
+              >
+                Go to Home
+              </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* failuer model */}
+      <div
+        className="modal fade"
+        id="loginFailedModal"
+        tabIndex="-1"
+        aria-labelledby="loginFailedModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="loginFailedModalLabel">
+                Log in failed!
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              Log in failed, invalid credentials!
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={() => {
+                  selectTabValue("home");
+                  window.location.replace("/"); // refresh state
+                }}
+              >
+                Go to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
