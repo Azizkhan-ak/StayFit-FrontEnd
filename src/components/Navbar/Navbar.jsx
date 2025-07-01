@@ -21,7 +21,7 @@ const Navbar = () => {
     else if (path.includes("locations")) selectTabValue("locations");
     else if (path.includes("blogs")) selectTabValue("blogs");
     else if (path.includes("cartItems")) selectTabValue("cartItems");
-    else if(path.includes("login")) selectTabValue("login");
+    else if(path.includes("login") || path.includes("resetPassword") ) selectTabValue("login");
     else if (path.includes("userProfile")) selectTabValue("userProfile");
     else if (path.includes("adminPanel")) selectTabValue("adminPanel")
     else selectTabValue("home");

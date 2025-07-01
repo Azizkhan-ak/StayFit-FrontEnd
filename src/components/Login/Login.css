@@ -7,7 +7,7 @@
     width: 500px;
     margin-left: 100px;
     margin-top: 150px;
-    background-color: rgb(4, 102, 109);
+    background-color: rgb(240, 220, 228);
     border-radius: 25px;
 }
 
@@ -16,7 +16,7 @@
     width: 500px;
     margin-left: 100px;
     margin-top:50px;
-    background-color: rgb(4, 102, 109);
+    background-color: rgb(240, 220, 228);
     border-radius: 25px;
 }
 
@@ -79,15 +79,14 @@ cursor: pointer;
 .login-button{
     display: flex;
     max-width: 100%;
-    gap: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-button button{
-    width: 300px;
+    width: 100px;
     border-radius: 25px;
+    margin-top: 20px;
     background-color: rgb(215, 250, 241);
 }
 
@@ -121,6 +120,15 @@ cursor: pointer;
     margin-left: 10px;
 }
 
+.showpassword a{
+    margin-left: 10px;
+    color: blue;
+    text-decoration: none;
+}
+
+.showpassword a:hover{
+    cursor: pointer;
+}
 
 .signup-form {
   padding-top: 20px;

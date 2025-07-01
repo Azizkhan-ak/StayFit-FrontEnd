@@ -6,6 +6,7 @@ import axios from "axios";
 import { userManagementUrls } from "../../urls/urls";
 import { ApplicationContext } from "../ContextProvider/ContextProvider";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   useEffect(() => {
@@ -157,16 +158,13 @@ const Login = () => {
                     }}
                   />
                   <label>Show password</label>
+                 <a href="/resetPassword">Forgot Password? Reset!</a>
                 </div>
                 <div className="login-button">
                   
                   <button onClick={signIn}>
                     {loading ? "logging In..." : "Login"}
                   </button>
-                   <button onClick={signIn}>
-                    Forgot password? Reset!
-                  </button>
-
                 </div>
               </form>
             </div>
