@@ -12,7 +12,9 @@ export const checkOutUrls ={
 
 export const userManagementUrls = {
     registerUrl:"http://localhost:8080/stayfit/api/public/register",
-    loginUrl:"http://localhost:8080/stayfit/api/public/login"
+    loginUrl:"http://localhost:8080/stayfit/api/public/login",
+    passwordResetEmail:"http://localhost:8080/stayfit/api/public/passwordResetEmail",
+    passwordReset:"http://localhost:8080/stayfit/api/public/passwordReset"
 }
 
 export const adminUrls = {

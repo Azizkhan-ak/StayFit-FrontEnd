@@ -17,6 +17,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import Login from './components/Login/Login.jsx';
 import AdminPanel from './components/AdminPanel/AdminPanel.jsx';
+import SendPasswordResetEmail from './components/ResetPassword/SendPasswordResetEmail.jsx';
 import ResetPassword from './components/ResetPassword/ResetPassword.jsx';
 
 // Replace with your actual publishable key from Stripe Dashboard
@@ -50,7 +51,8 @@ function App() {
         <Route path="/cartItems" element={<CartItems />} />
         <Route path="/login" element={<Login/>}/>
         <Route path='/adminPanel' element={<AdminPanel/>}/>
-        <Route path='/resetPassword' element={<ResetPassword/>}/>
+        <Route path='/sendPasswordResetEmail' element={<SendPasswordResetEmail/>}/>
+        <Route path="/resetPassword" element={<ResetPassword />} />
         {/* Add more routes as needed */}
       </Routes>
     </Elements>

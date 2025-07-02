@@ -6,7 +6,6 @@ import axios from "axios";
 import { userManagementUrls } from "../../urls/urls";
 import { ApplicationContext } from "../ContextProvider/ContextProvider";
 import { jwtDecode } from "jwt-decode";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   useEffect(() => {
@@ -158,7 +157,7 @@ const Login = () => {
                     }}
                   />
                   <label>Show password</label>
-                 <a href="/resetPassword">Forgot Password? Reset!</a>
+                 <a href="/sendPasswordResetEmail">Forgot Password? Reset!</a>
                 </div>
                 <div className="login-button">
                   
