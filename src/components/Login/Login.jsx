@@ -27,13 +27,51 @@ const Login = () => {
   }, []);
 
   function handleGoogleResponse(response) {
-    if(response){
-      console.log(response.credential);
-    }
-    else{
+    if (response && response.credential) {
+      const sendToken = async () => {
+        const apiResult = await axios.post(
+          userManagementUrls.registerViaGoogle,
+          response.credential,
+          {
+            headers: {
+              "Content-Type": "text/plain",
+            },
+          }
+        );
 
-    }
+        const responseData = apiResult.data;
+        console.log(apiResult);
+        if (responseData.successful === true) {
+          const decodeToken = jwtDecode(responseData.content);
+          sessionStorage.setItem("token", responseData.content);
+          sessionStorage.setItem("subject", decodeToken.sub);
+          sessionStorage.setItem("role", decodeToken.role);
+          sessionStorage.setItem("expiry", decodeToken.exp);
+          const model = new Modal(
+            document.getElementById("loginSuccessModal"),
+            {
+              backdrop: "static",
+              keyboard: false,
+            }
+          );
+          model.show();
+        } else {
+          const model = new Modal(document.getElementById("loginFailedModal"), {
+            backdrop: "static",
+            keyboard: false,
+          });
+          model.show();
+        }
+      };
 
+      sendToken();
+    } else {
+      const model = new Modal(document.getElementById("loginFailedModal"), {
+        backdrop: "static",
+        keyboard: false,
+      });
+      model.show();
+    }
   }
 
   const { selectTabValue, selectedTab } = useContext(ApplicationContext);
@@ -157,10 +195,9 @@ const Login = () => {
                     }}
                   />
                   <label>Show password</label>
-                 <a href="/sendPasswordResetEmail">Forgot Password? Reset!</a>
+                  <a href="/sendPasswordResetEmail">Forgot Password? Reset!</a>
                 </div>
                 <div className="login-button">
-                  
                   <button onClick={signIn}>
                     {loading ? "logging In..." : "Login"}
                   </button>

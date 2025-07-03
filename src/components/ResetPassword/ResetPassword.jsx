@@ -22,7 +22,7 @@ const ResetPassword = () => {
         "&password=" +
         password
     );
-    console.log(response);
+    
     if (response && response.data && response.data.successful) {
         setLoading(false);
         const modal = new Modal(document.getElementById("passwordResetSuccessModal"), {backdrop:"static",keyboard:false});

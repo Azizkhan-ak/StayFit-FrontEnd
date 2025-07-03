@@ -14,7 +14,8 @@ export const userManagementUrls = {
     registerUrl:"http://localhost:8080/stayfit/api/public/register",
     loginUrl:"http://localhost:8080/stayfit/api/public/login",
     passwordResetEmail:"http://localhost:8080/stayfit/api/public/passwordResetEmail",
-    passwordReset:"http://localhost:8080/stayfit/api/public/passwordReset"
+    passwordReset:"http://localhost:8080/stayfit/api/public/passwordReset",
+    registerViaGoogle:"http://localhost:8080/stayfit/api/public/registerOAuth"
 }
 
 export const adminUrls = {
