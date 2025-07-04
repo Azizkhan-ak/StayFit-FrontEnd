@@ -76,7 +76,10 @@ const InventoryItem = ({ item }) => {
           <img
             src={icons.editIcon}
             title="Edit product details"
-            onClick={() => {}}
+            onClick={() => {
+              const modal = new Modal(document.getElementById("editProductModal"),{backdrop:"static",keyboard:false});
+              modal.show();
+            }}
           />
         </div>
       </div>
@@ -129,7 +132,7 @@ const InventoryItem = ({ item }) => {
                       type="number"
                       className="form-control"
                       name="discount_in_percent"
-                      defaultValue={item.discount_in_percent}
+                      defaultValue={item.discountInPercent}
                     />
                   </div>
                   <div className="col-md-6">
@@ -138,7 +141,7 @@ const InventoryItem = ({ item }) => {
                       type="number"
                       className="form-control"
                       name="items_in_stock"
-                      defaultValue={item.items_in_stock}
+                      defaultValue={item.itemsInStock}
                     />
                   </div>
                   <div className="col-md-12">
@@ -147,13 +150,13 @@ const InventoryItem = ({ item }) => {
                       className="form-control"
                       rows="3"
                       name="description"
-                      defaultValue={item.description}
+                      defaultValue={item.desc}
                     ></textarea>
                   </div>
                   <div className="col-md-12">
                     <label className="form-label">S3 URL</label>
                     <input
-                      type="text"
+                      type="file"
                       className="form-control"
                       name="s3_url"
                       defaultValue={item.s3_url}
